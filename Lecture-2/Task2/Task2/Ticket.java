@@ -4,19 +4,13 @@ public class Ticket {
     private int id;
     private String question;
 
-    public void setId(int id) {
+    public Ticket(int id, String question) {
         this.id = id;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setQuestion(String question){
         this.question = question;
     }
 
-    public String getQuestion(){
-        return question;
+    @Override
+    public String toString(){
+        return "id= "+id+", Question= "+question;
     }
 }

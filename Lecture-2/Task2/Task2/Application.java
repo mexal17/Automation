@@ -1,6 +1,5 @@
 package Task2;
 
-import static java.lang.Math.max;
 import static java.lang.Math.random;
 
 public class Application {
@@ -8,98 +7,82 @@ public class Application {
     private static Ticket[] createTickets(int amount){
         Ticket[] tickets = new Ticket[amount];
         for (int i = 0; i < tickets.length; i++) {
-            tickets[i] = new Ticket();
-            tickets[i].setId(i+1);
-            tickets[i].setQuestion("Question #"+(i+1));
+            tickets[i] = new Ticket(i+1,"Theme #"+(i+1));
         }
         return tickets;
     }
 
-    private static void divideTickets(Student[] students, Ticket[] tickets){
-        for (Student student:students) {
-            student.setTicket(tickets[(int)(random()*9) +1]);
+    private static Ticket[] distributeTickets(int studentsAmount, Ticket[] tickets){
+        Ticket[] distributedTickets = new Ticket[studentsAmount];
+        for (int i = 0; i < distributedTickets.length; i++) {
+            distributedTickets[i] = tickets[(int)(random()*(tickets.length-1) +1)];
         }
+        return distributedTickets;
     }
 
-    private static void divideScores(Student[] students, int[] scores){
-        for (int i = 0; i < 5; i++) {
+    private static int [] divideScores(int studentsAmount){
+        int[] scores = new int[studentsAmount];
+        for (int i = 0; i < scores.length; i++) {
             scores[i] = (int)(random()*5+1);
-            students[i].setScore(scores[i]);
+        }
+        return scores;
+    }
+
+    private static void showExamResults(Exam exam){
+        System.out.println("Exam results of Group #"+exam.getGroup().getGroupId()+"->");
+        for (int i = 0; i < exam.getGroup().getStudents().length; i++) {
+            System.out.println(exam.getGroup().getStudents()[i].toString()+" got ticket= "
+                    +exam.getTickets()[i].toString()+" and score= "
+                    +exam.getScores()[i]);
         }
     }
 
-    private  static void showDividedScores(Student[] students){
-        for (Student student: students) {
-            System.out.println(student.getName()+" "+student.getLastName()+" got score="+student.getScore());
-        }
-    }
-
-    private static void showTicketsAndScores(Student[] students, int groupNumber){
-        System.out.println("Group #"+groupNumber);
-        for (Student student:students) {
-            System.out.println(student.getName()+" "+student.getLastName()+" got ticket="+student.getTicket().getQuestion()+" and score="+student.getScore());
-        }
-    }
-
-    private static void showMediumScore(Student[] students){
+    private static void showMediumGroupScore(Exam exam){
         int sum = 0;
-        for (Student student:students) {
-            sum+=student.getScore();
+        for (int score:exam.getScores()) {
+            sum+=score;
         }
-        double mediumScore = (double)sum/students.length;
-        System.out.println("medium score is " + mediumScore);
+        double mediumScore = (double)sum/exam.getScores().length;
+        System.out.println("Medium score of Group#"+ exam.getGroup().getGroupId()+" is " + mediumScore);
     }
 
     private static int bestScoreInGroup(int[] scores){
         int bestScore = 1;
         for (int score:scores){
-            if (bestScore < score){
-                bestScore = score;
-            }
+            bestScore = Math.max(score,bestScore);
         }
         return bestScore;
     }
 
-    private static void showStudentsWithScore(int score, Student[] students){
-        for (Student student: students){
-            if (student.getScore() == score){
-                System.out.println("the best student is "+student.getName()+" "+student.getLastName()+" got "+student.getScore());
+    private static void showStudentsByScores(int score,Exam exam){
+        for (int i = 0; i < exam.getGroup().getStudents().length; i++) {
+            if (exam.getScores()[i] == score){
+                System.out.println("the best student "+exam.getGroup().getStudents()[i].toString()+
+                        " got score "+ exam.getScores()[i]);
             }
         }
     }
 
     public static void main(String[] args) {
 
-        Group group1 = new Group(5,5);
-        Group group2 = new Group(5,5);
+        Group group1 = new Group(1,5);
+        Group group2 = new Group(2,5);
 
-        // создаем студентов
-        group1.setGroupStudents();
-        group2.setGroupStudents();
-
-        //создаем билеты
         Ticket[] tickets = createTickets(10);
 
-        //распределение рандомных билетов
-        divideTickets(group1.getGroupStudents(), tickets);
-        divideTickets(group2.getGroupStudents(), tickets);
+        Exam firstExam = new Exam(distributeTickets(group1.getStudents().length,tickets),group1,divideScores(group1.getStudents().length));
+        Exam secondExam = new Exam(distributeTickets(group2.getStudents().length,tickets),group2,divideScores(group2.getStudents().length));
 
-        // распределяем оценки
-        divideScores(group1.getGroupStudents(),group1.getGroupScores());
-        divideScores(group2.getGroupStudents(),group2.getGroupScores());
+        showExamResults(firstExam);
+        showExamResults(secondExam);
 
-        //вывод оценок и билетов
-        showTicketsAndScores(group1.getGroupStudents(),1);
-        showTicketsAndScores(group2.getGroupStudents(),2);
+        showMediumGroupScore(firstExam);
+        showMediumGroupScore(secondExam);
 
-        //средняя оценка
-        showMediumScore(group1.getGroupStudents());
-        showMediumScore(group2.getGroupStudents());
+        int maxScore = Math.max(bestScoreInGroup(firstExam.getScores()),bestScoreInGroup(secondExam.getScores()));
 
-        int maxScore = max(bestScoreInGroup(group1.getGroupScores()),bestScoreInGroup(group2.getGroupScores()));
-
-        showStudentsWithScore(maxScore,group1.getGroupStudents());
-        showStudentsWithScore(maxScore,group2.getGroupStudents());
+        showStudentsByScores(maxScore,firstExam);
+        showStudentsByScores(maxScore,secondExam);
 
     }
 }
