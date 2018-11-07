@@ -5,7 +5,7 @@ import java.util.Scanner;
 public class Application {
 
     private static String operand = "";
-    private static boolean flagMain = true;
+    private static boolean isAppQuit = false;
 
     private static void getResult(String operand, double firstDigit, double secondDigit){
 
@@ -25,24 +25,19 @@ public class Application {
     }
 
     private static double getDigit(Scanner scanner){
-
-        boolean flag = true;
+        boolean isDigit = false;
         double digit = 0.0;
-        String input;
+        String typedStr;
 
-        while (flag){
+        while (!isDigit){
             try {
-
-                input = scanner.nextLine();
-
-                if (input.equals("quit")){
-                    flagMain = false;
+                typedStr = scanner.nextLine();
+                if (typedStr.equals("quit")){
+                    isAppQuit = true;
                     break;
                 }
-
-                digit = Double.parseDouble(input);
-                flag =false;
-
+                digit = Double.parseDouble(typedStr);
+                isDigit =true;
             } catch (NumberFormatException e) {
                 System.out.println("---!!!--- wrong input, type correct number:");
             }
@@ -51,19 +46,18 @@ public class Application {
     }
 
     private static void setOperand(Scanner scanner){
-
-        boolean flag = true;
+        boolean isNotSign = true;
         String input;
 
-        while (flag){
+        while (isNotSign){
             input = scanner.nextLine();
             if (input.equals("quit")){
-                flagMain = false;
+                isAppQuit = true;
                 break;
             }
             if (input.equals("+") || input.equals("-") || input.equals("*") || input.equals("/")){
                 operand = input;
-                flag = false;
+                isNotSign = false;
             }else {
                 System.out.println("---!!!--- wrong input, type correct operation sign:");
             }
@@ -74,22 +68,14 @@ public class Application {
 
         Scanner scanner = new Scanner(System.in);
 
-        while (flagMain) {
-
+        while (!isAppQuit) {
             System.out.println("->> type new expression:");
-
             double firstDigit = getDigit(scanner);
-
-            if (!flagMain){break;}
-
+            if (isAppQuit){break;}
             setOperand(scanner);
-
-            if (!flagMain){break;}
-
+            if (isAppQuit){break;}
             double secondDigit = getDigit(scanner);
-
-            if (!flagMain){break;}
-
+            if (isAppQuit){break;}
             getResult(operand, firstDigit, secondDigit);
         }
     }
