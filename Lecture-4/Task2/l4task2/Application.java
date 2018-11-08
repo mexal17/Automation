@@ -1,34 +1,39 @@
-package Task2;
+package l4task2;
 
+import java.time.DayOfWeek;
 import java.util.Scanner;
 
 public class Application {
+
+    private static void printInfo(int dayNumber){
+        System.out.println(DayOfWeek.of(dayNumber));
+    }
 
     public static void main(String[] args) {
         System.out.println("type the day number: ");
         Scanner scanner = new Scanner(System.in);
         int dayNumber = scanner.nextInt();
-        switch (dayNumber){
+        switch (dayNumber) {
             case 1:
-                System.out.println("Monday");
+                printInfo(dayNumber);
                 break;
             case 2:
-                System.out.println("Tuesday");
+                printInfo(dayNumber);
                 break;
             case 3:
-                System.out.println("Wednesday");
+                printInfo(dayNumber);
                 break;
             case 4:
-                System.out.println("Thursday");
+                printInfo(dayNumber);
                 break;
             case 5:
-                System.out.println("Friday");
+                printInfo(dayNumber);
                 break;
             case 6:
-                System.out.println("Saturday");
+                printInfo(dayNumber);
                 break;
             case 7:
-                System.out.println("Sunday");
+                printInfo(dayNumber);
                 break;
             default:
                 System.out.println("incorrect day number");
