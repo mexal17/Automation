@@ -1,4 +1,4 @@
-package Task3;
+package task3;
 
 import java.util.Scanner;
 
@@ -7,37 +7,37 @@ public class Application {
     private static String operand = "";
     private static boolean isAppQuit = false;
 
-    private static void getResult(String operand, double firstDigit, double secondDigit){
+    private static void getResult(String operand, double firstDigit, double secondDigit) {
 
-        switch (operand){
+        switch (operand) {
             case "+":
-                System.out.println("result = "+(firstDigit+secondDigit));
+                System.out.println("result = " + (firstDigit + secondDigit));
                 break;
             case "-":
-                System.out.println("result = "+(firstDigit-secondDigit));
+                System.out.println("result = " + (firstDigit - secondDigit));
                 break;
             case "*":
-                System.out.println("result = "+(firstDigit*secondDigit));
+                System.out.println("result = " + (firstDigit * secondDigit));
                 break;
             case "/":
-                System.out.println("result = "+(firstDigit/secondDigit));
+                System.out.println("result = " + (firstDigit / secondDigit));
         }
     }
 
-    private static double getDigit(Scanner scanner){
+    private static double getDigit(Scanner scanner) {
         boolean isDigit = false;
         double digit = 0.0;
         String typedStr;
 
-        while (!isDigit){
+        while (!isDigit) {
             try {
                 typedStr = scanner.nextLine();
-                if (typedStr.equals("quit")){
+                if (typedStr.equals("quit")) {
                     isAppQuit = true;
                     break;
                 }
                 digit = Double.parseDouble(typedStr);
-                isDigit =true;
+                isDigit = true;
             } catch (NumberFormatException e) {
                 System.out.println("---!!!--- wrong input, type correct number:");
             }
@@ -45,20 +45,20 @@ public class Application {
         return digit;
     }
 
-    private static void setOperand(Scanner scanner){
+    private static void setOperand(Scanner scanner) {
         boolean isNotSign = true;
         String input;
 
-        while (isNotSign){
+        while (isNotSign) {
             input = scanner.nextLine();
-            if (input.equals("quit")){
+            if (input.equals("quit")) {
                 isAppQuit = true;
                 break;
             }
-            if (input.equals("+") || input.equals("-") || input.equals("*") || input.equals("/")){
+            if (input.equals("+") || input.equals("-") || input.equals("*") || input.equals("/")) {
                 operand = input;
                 isNotSign = false;
-            }else {
+            } else {
                 System.out.println("---!!!--- wrong input, type correct operation sign:");
             }
         }
@@ -71,11 +71,17 @@ public class Application {
         while (!isAppQuit) {
             System.out.println("->> type new expression:");
             double firstDigit = getDigit(scanner);
-            if (isAppQuit){break;}
+            if (isAppQuit) {
+                break;
+            }
             setOperand(scanner);
-            if (isAppQuit){break;}
+            if (isAppQuit) {
+                break;
+            }
             double secondDigit = getDigit(scanner);
-            if (isAppQuit){break;}
+            if (isAppQuit) {
+                break;
+            }
             getResult(operand, firstDigit, secondDigit);
         }
     }
