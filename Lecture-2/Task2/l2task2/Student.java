@@ -1,4 +1,4 @@
-package Task2;
+package l2task2;
 
 public class Student {
     private String name;
@@ -11,6 +11,6 @@ public class Student {
 
     @Override
     public String toString() {
-        return  name + " " +lastName;
+        return name + " " + lastName;
     }
 }

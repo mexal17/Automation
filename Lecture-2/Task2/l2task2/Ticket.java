@@ -1,4 +1,4 @@
-package Task2;
+package l2task2;
 
 public class Ticket {
     private int id;
@@ -10,7 +10,7 @@ public class Ticket {
     }
 
     @Override
-    public String toString(){
-        return "id= "+id+", Question= "+question;
+    public String toString() {
+        return "id= " + id + ", Question= " + question;
     }
 }
