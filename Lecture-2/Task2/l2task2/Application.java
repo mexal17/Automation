@@ -67,22 +67,16 @@ public class Application {
 
         Group group1 = new Group(1, 5);
         Group group2 = new Group(2, 5);
-
         Ticket[] tickets = createTickets(10);
-
         Exam firstExam = new Exam(distributeTickets(group1.getStudents().length, tickets), group1, divideScores(group1.getStudents().length));
         Exam secondExam = new Exam(distributeTickets(group2.getStudents().length, tickets), group2, divideScores(group2.getStudents().length));
 
         showExamResults(firstExam);
         showExamResults(secondExam);
-
         showMediumGroupScore(firstExam);
         showMediumGroupScore(secondExam);
-
         int maxScore = Math.max(bestScoreInGroup(firstExam.getScores()), bestScoreInGroup(secondExam.getScores()));
-
         showStudentsByScores(maxScore, firstExam);
         showStudentsByScores(maxScore, secondExam);
-
     }
 }
