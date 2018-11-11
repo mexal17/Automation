@@ -16,6 +16,11 @@ public class Application {
         return students;
     }
 
+    private static List<Student> sortStudentsByLastName(List<Student> students) {
+        Collections.sort(students, new LastNameComparator());
+        return students;
+    }
+
     private static void showStudents(List<Student> students) {
         for (Student student : students) {
             System.out.println(student);
@@ -43,6 +48,32 @@ public class Application {
         return ((double) summaryAge) / students.size();
     }
 
+    private static Map<Integer, Student> getStudentMap(List<Student> students) {
+        Map<Integer, Student> studentMap = new HashMap<Integer, Student>();
+        for (Student student : students) {
+            studentMap.put(student.getId(), student);
+        }
+        return studentMap;
+    }
+
+    private static void showStudentMap(Map<Integer, Student> studentMap) {
+        Iterator<Map.Entry<Integer, Student>> iterator = studentMap.entrySet().iterator();
+        while (iterator.hasNext()) {
+            Map.Entry<Integer, Student> entry = iterator.next();
+            System.out.println("id = " + entry.getKey() + ", " + entry.getValue().toString());
+        }
+    }
+
+    private static Map<Integer, Student> getStudentsWithOlderAge(List<Student> students, int age) {
+        Map<Integer, Student> studentMap = new HashMap<Integer, Student>();
+        for (Student student : students) {
+            if (student.getAge() > age) {
+                studentMap.put(student.getId(), student);
+            }
+        }
+        return studentMap;
+    }
+
     public static void main(String[] args) {
         List<Student> students = new ArrayList<>();
         for (int i = 0; i < firstNames.length; i++) {
@@ -51,8 +82,14 @@ public class Application {
         showStudents(students);
         System.out.println("-----> sortStudentsByAge:");
         showStudents(sortStudentsByAge(students));
+        System.out.println("-----> sortStudentsByLastName:");
+        showStudents(sortStudentsByLastName(students));
         System.out.println("-----> getStudentsByFirstLetterInLastName:");
         showStudents(getStudentsByFirstLetterInLastName("b", students));
         System.out.println("-----> MediumStudentAge = " + getMediumStudentAge(students));
+        System.out.println("-----> showStudentMap:");
+        showStudentMap(getStudentMap(students));
+        System.out.println("-----> showStudentMap:");
+        showStudentMap(getStudentsWithOlderAge(students,35));
     }
 }
