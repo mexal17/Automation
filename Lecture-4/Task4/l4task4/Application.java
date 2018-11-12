@@ -1,34 +1,22 @@
 package l4task4;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Scanner;
 
 public class Application {
 
-    private static ArrayList<Runner> notSortedList;
-    private static ArrayList<Runner> sortedList;
+    private static List<Runner> runners;
 
-    private static void showListOfRunners(ArrayList<Runner> runners) {
+    private static void showListOfRunners(List<Runner> runners) {
         for (Runner runner : runners) {
             System.out.println(runner.toString());
         }
     }
 
     private static void makeMarathon() {
-        int bestTime;
-        Runner bestRunner = notSortedList.get(0);
-
-        while (notSortedList.size() != 0) {
-            bestTime = notSortedList.get(0).getTime();
-            for (Runner runner : notSortedList) {
-                if (bestTime >= runner.getTime()) {
-                    bestTime = runner.getTime();
-                    bestRunner = runner;
-                }
-            }
-            sortedList.add(bestRunner);
-            notSortedList.remove(bestRunner);
-        }
+        Collections.sort(runners, new TimeRunnersComparator());
     }
 
     private static void showRunnerByPlace() {
@@ -36,10 +24,10 @@ public class Application {
         System.out.println("type the runner place:");
         if (scanner.hasNextInt()) {
             int place = scanner.nextInt();
-            if (place <= sortedList.size()) {
-                System.out.println(sortedList.get(place - 1).toString());
+            if (place <= runners.size()) {
+                System.out.println(runners.get(place - 1).toString());
             } else {
-                System.out.println("Error: The is no such place. Amount of runners is " + sortedList.size());
+                System.out.println("Error: The is no such place. Amount of runners is " + runners.size());
             }
         } else {
             System.out.println("Error: Incorrect input!");
@@ -48,25 +36,23 @@ public class Application {
 
     private static void showTheWinner() {
         System.out.println("The winner is:");
-        System.out.println(sortedList.get(0).toString());
+        System.out.println(runners.get(0).toString());
     }
 
     public static void main(String[] args) {
 
-        notSortedList = new ArrayList<Runner>();
-        sortedList = new ArrayList<Runner>();
+        runners = new ArrayList<>();
         String[] names = {"Elena", "Thomas", "Hamilton", "Suzie", "Phil", "Matt", "Alex", "Emma", "John", "James", "Jane", "Emily", "Daniel", "Neda", "Aaron", "Kate"};
         int[] timeResults = {341, 273, 278, 329, 445, 402, 388, 275, 243, 334, 412, 393, 299, 343, 317, 265};
-
         for (int i = 0; i < names.length; i++) {
             Runner runner = new Runner(names[i], timeResults[i]);
-            notSortedList.add(runner);
+            runners.add(runner);
         }
         System.out.println("------- Runners on START: -------------------");
-        showListOfRunners(notSortedList);
+        showListOfRunners(runners);
         System.out.println("------- Runners on FINISH:--------------------");
         makeMarathon();
-        showListOfRunners(sortedList);
+        showListOfRunners(runners);
         showRunnerByPlace();
         showTheWinner();
     }
