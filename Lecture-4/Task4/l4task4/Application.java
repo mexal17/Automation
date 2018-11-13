@@ -1,9 +1,6 @@
 package l4task4;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 public class Application {
 
@@ -36,17 +33,17 @@ public class Application {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Type the runner place to get runner name and his time:");
         boolean isPlacePrinted = false;
-        while(!isPlacePrinted){
-            if (scanner.hasNextInt()) {
-                int place = scanner.nextInt();
-                if (place <= marathonResults.size()) {
-                    System.out.println(marathonResults.get(place - 1).toString());
-                    isPlacePrinted = true;
-                } else {
-                    System.out.println("Error: The is no such place. Amount of runners is " + marathonResults.size());
-                }
-            } else {
-                System.out.println("Error: Incorrect input! Try again");
+        while (!isPlacePrinted) {
+            try {
+                    int place = Integer.parseInt(scanner.nextLine());
+                    if (place <= marathonResults.size() && place > 0) {
+                        System.out.println(marathonResults.get(place - 1).toString());
+                        isPlacePrinted = true;
+                    } else {
+                        System.out.println("Error: The is no such place. Amount of runners is " + marathonResults.size());
+                    }
+            } catch (NumberFormatException e) {
+                System.out.println("Error: Type digit");
             }
         }
     }
