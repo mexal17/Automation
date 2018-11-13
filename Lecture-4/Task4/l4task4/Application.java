@@ -7,53 +7,77 @@ import java.util.Scanner;
 
 public class Application {
 
-    private static List<Runner> runners;
+    private static List<Runner> getRunners(String[] names){
+        List<Runner> runners = new ArrayList<>();
+        for (String name : names) {
+            Runner runner = new Runner(name);
+            runners.add(runner);
+        }
+        return runners;
+    }
 
     private static void showListOfRunners(List<Runner> runners) {
-        for (Runner runner : runners) {
-            System.out.println(runner.toString());
+        System.out.println(runners);
+    }
+
+    private static List<MarathonResult> getMarathonResults(List<Runner> runners, int[] timeResults) {
+        List<MarathonResult> marathonResults = new ArrayList<>();
+        for (int i = 0; i < timeResults.length; i++) {
+            marathonResults.add(new MarathonResult(timeResults[i],runners.get(i)));
         }
+        Collections.sort(marathonResults, new AscendingMarathonResultsComparator());
+        for (int i = 0; i < marathonResults.size(); i++) {
+            marathonResults.get(i).setPlace(i+1);
+        }
+        return marathonResults;
     }
 
-    private static void makeMarathon() {
-        Collections.sort(runners, new TimeRunnersComparator());
-    }
-
-    private static void showRunnerByPlace() {
+    private static void showRunnerByPlace(List<MarathonResult> marathonResults) {
         Scanner scanner = new Scanner(System.in);
-        System.out.println("type the runner place:");
-        if (scanner.hasNextInt()) {
-            int place = scanner.nextInt();
-            if (place <= runners.size()) {
-                System.out.println(runners.get(place - 1).toString());
+        System.out.println("Type the runner place to get runner name and his time:");
+        boolean isPlacePrinted = false;
+        while(!isPlacePrinted){
+            if (scanner.hasNextInt()) {
+                int place = scanner.nextInt();
+                if (place <= marathonResults.size()) {
+                    System.out.println(marathonResults.get(place - 1).toString());
+                    isPlacePrinted = true;
+                } else {
+                    System.out.println("Error: The is no such place. Amount of runners is " + marathonResults.size());
+                }
             } else {
-                System.out.println("Error: The is no such place. Amount of runners is " + runners.size());
+                System.out.println("Error: Incorrect input! Try again");
             }
-        } else {
-            System.out.println("Error: Incorrect input!");
         }
     }
 
-    private static void showTheWinner() {
+    private static void showTheWinner(List<MarathonResult> marathonResults) {
         System.out.println("The winner is:");
-        System.out.println(runners.get(0).toString());
+        System.out.println(marathonResults.get(0).toString());
+    }
+
+    private static void showTheSecondPlaceRunner(List<MarathonResult> marathonResults){
+        System.out.println("The Second Place Runner is:");
+        System.out.println(marathonResults.get(1).toString());
+    }
+
+    private static void printMarathonResults(List<MarathonResult> marathonResults){
+        for(MarathonResult result:marathonResults){
+            System.out.println(result);
+        }
     }
 
     public static void main(String[] args) {
-
-        runners = new ArrayList<>();
-        String[] names = {"Elena", "Thomas", "Hamilton", "Suzie", "Phil", "Matt", "Alex", "Emma", "John", "James", "Jane", "Emily", "Daniel", "Neda", "Aaron", "Kate"};
-        int[] timeResults = {341, 273, 278, 329, 445, 402, 388, 275, 243, 334, 412, 393, 299, 343, 317, 265};
-        for (int i = 0; i < names.length; i++) {
-            Runner runner = new Runner(names[i], timeResults[i]);
-            runners.add(runner);
-        }
+        final String[] runnerNames = {"Elena", "Thomas", "Hamilton", "Suzie", "Phil", "Matt", "Alex", "Emma", "John", "James", "Jane", "Emily", "Daniel", "Neda", "Aaron", "Kate"};
+        final int[] timeResults = {341, 273, 278, 329, 445, 402, 388, 275, 243, 334, 412, 393, 299, 343, 317, 265};
+        List<Runner> runners = getRunners(runnerNames);
         System.out.println("------- Runners on START: -------------------");
         showListOfRunners(runners);
         System.out.println("------- Runners on FINISH:--------------------");
-        makeMarathon();
-        showListOfRunners(runners);
-        showRunnerByPlace();
-        showTheWinner();
+        List<MarathonResult> marathonResults = getMarathonResults(runners,timeResults);
+        printMarathonResults(marathonResults);
+        showTheWinner(marathonResults);
+        showTheSecondPlaceRunner(marathonResults);
+        showRunnerByPlace(marathonResults);
     }
 }
