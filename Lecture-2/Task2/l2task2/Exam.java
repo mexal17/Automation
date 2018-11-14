@@ -1,9 +1,9 @@
 package l2task2;
 
 public class Exam {
-    private Ticket[] tickets;
-    private Group group;
-    private int[] scores;
+    private final Ticket[] tickets;
+    private final Group group;
+    private final int[] scores;
 
     public Exam(Ticket[] tickets, Group group, int[] scores) {
         this.tickets = tickets;

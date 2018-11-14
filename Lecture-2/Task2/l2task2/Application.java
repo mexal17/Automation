@@ -31,19 +31,18 @@ public class Application {
     private static void showExamResults(Exam exam) {
         System.out.println("Exam results of Group #" + exam.getGroup().getGroupId() + "->");
         for (int i = 0; i < exam.getGroup().getStudents().length; i++) {
-            System.out.println(exam.getGroup().getStudents()[i].toString() + " got ticket= "
-                    + exam.getTickets()[i].toString() + " and score= "
-                    + exam.getScores()[i]);
+            System.out.println(exam.getGroup().getStudents()[i] + " got ticket= "
+                    + exam.getTickets()[i] + " and score= " + exam.getScores()[i]);
         }
     }
 
     private static void showMediumGroupScore(Exam exam) {
-        int sum = 0;
+        int sumOfAllScores = 0;
         for (int score : exam.getScores()) {
-            sum += score;
+            sumOfAllScores += score;
         }
-        double mediumScore = (double) sum / exam.getScores().length;
-        System.out.println("Medium score of Group#" + exam.getGroup().getGroupId() + " is " + mediumScore);
+        System.out.println("Medium score of Group#" + exam.getGroup().getGroupId() + " is "
+                + (double) sumOfAllScores / exam.getScores().length);
     }
 
     private static int bestScoreInGroup(int[] scores) {
@@ -57,20 +56,18 @@ public class Application {
     private static void showStudentsByScores(int score, Exam exam) {
         for (int i = 0; i < exam.getGroup().getStudents().length; i++) {
             if (exam.getScores()[i] == score) {
-                System.out.println("the best student " + exam.getGroup().getStudents()[i].toString() +
+                System.out.println("the best student " + exam.getGroup().getStudents()[i] +
                         " got score " + exam.getScores()[i]);
             }
         }
     }
 
     public static void main(String[] args) {
-
         Group group1 = new Group(1, 5);
         Group group2 = new Group(2, 5);
         Ticket[] tickets = createTickets(10);
         Exam firstExam = new Exam(distributeTickets(group1.getStudents().length, tickets), group1, divideScores(group1.getStudents().length));
         Exam secondExam = new Exam(distributeTickets(group2.getStudents().length, tickets), group2, divideScores(group2.getStudents().length));
-
         showExamResults(firstExam);
         showExamResults(secondExam);
         showMediumGroupScore(firstExam);

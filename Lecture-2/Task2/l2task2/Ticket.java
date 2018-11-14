@@ -1,8 +1,8 @@
 package l2task2;
 
 public class Ticket {
-    private int id;
-    private String question;
+    private final int id;
+    private final String question;
 
     public Ticket(int id, String question) {
         this.id = id;

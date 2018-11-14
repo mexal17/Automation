@@ -5,7 +5,7 @@ import static java.lang.Math.random;
 public class Group {
 
     private Student[] students;
-    private int groupId;
+    private final int groupId;
 
     public Group(int groupId, int studentAmount) {
         this.groupId = groupId;

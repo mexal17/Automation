@@ -1,8 +1,8 @@
 package l2task2;
 
 public class Student {
-    private String name;
-    private String lastName;
+    private final String name;
+    private final String lastName;
 
     public Student(String name, String lastName) {
         this.name = name;
