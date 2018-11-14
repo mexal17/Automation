@@ -2,7 +2,7 @@ package l6task2;
 
 public class Student {
 
-    private int id;
+    private final int id;
     private final String firstName;
     private final String lastName;
     private final int age;

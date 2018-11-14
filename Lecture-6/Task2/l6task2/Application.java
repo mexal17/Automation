@@ -12,12 +12,12 @@ public class Application {
     }
 
     private static List<Student> sortStudentsByAge(List<Student> students) {
-        Collections.sort(students, new FirstAgeComparator());
+        Collections.sort(students, new AscendingFirstAgeComparator());
         return students;
     }
 
     private static List<Student> sortStudentsByLastName(List<Student> students) {
-        Collections.sort(students, new LastNameComparator());
+        Collections.sort(students, new AscendingLastNameComparator());
         return students;
     }
 
@@ -60,7 +60,7 @@ public class Application {
         Iterator<Map.Entry<Integer, Student>> iterator = studentMap.entrySet().iterator();
         while (iterator.hasNext()) {
             Map.Entry<Integer, Student> entry = iterator.next();
-            System.out.println("id = " + entry.getKey() + ", " + entry.getValue().toString());
+            System.out.println("id = " + entry.getKey() + ", " + entry.getValue());
         }
     }
 
@@ -89,7 +89,7 @@ public class Application {
         System.out.println("-----> MediumStudentAge = " + getMediumStudentAge(students));
         System.out.println("-----> showStudentMap:");
         showStudentMap(getStudentMap(students));
-        System.out.println("-----> showStudentMap:");
-        showStudentMap(getStudentsWithOlderAge(students,35));
+        System.out.println("-----> showStudentWithOlderAge = 35 :");
+        showStudentMap(getStudentsWithOlderAge(students, 35));
     }
 }
