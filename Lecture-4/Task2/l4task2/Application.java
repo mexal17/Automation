@@ -1,42 +1,29 @@
 package l4task2;
 
+import java.time.DateTimeException;
 import java.time.DayOfWeek;
 import java.util.Scanner;
 
 public class Application {
 
-    private static void printInfo(int dayNumber){
+    private static void printInfo(int dayNumber) {
         System.out.println(DayOfWeek.of(dayNumber));
     }
 
     public static void main(String[] args) {
-        System.out.println("type the day number: ");
         Scanner scanner = new Scanner(System.in);
-        int dayNumber = scanner.nextInt();
-        switch (dayNumber) {
-            case 1:
+        boolean isExit = false;
+        while (!isExit) {
+            try {
+                System.out.println("type the day number: ");
+                int dayNumber = Integer.valueOf(scanner.nextLine());
                 printInfo(dayNumber);
-                break;
-            case 2:
-                printInfo(dayNumber);
-                break;
-            case 3:
-                printInfo(dayNumber);
-                break;
-            case 4:
-                printInfo(dayNumber);
-                break;
-            case 5:
-                printInfo(dayNumber);
-                break;
-            case 6:
-                printInfo(dayNumber);
-                break;
-            case 7:
-                printInfo(dayNumber);
-                break;
-            default:
-                System.out.println("incorrect day number");
+                isExit = true;
+            } catch (DateTimeException e1) {
+                System.out.println(e1);
+            } catch (NumberFormatException e2) {
+                System.out.println(e2);
+            }
         }
     }
 }
