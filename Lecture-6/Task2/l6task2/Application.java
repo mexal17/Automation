@@ -1,6 +1,7 @@
 package l6task2;
 
 import java.util.*;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class Application {
 
@@ -8,7 +9,7 @@ public class Application {
     private static String[] lastNames = {"Smith", "Jeff", "Little", "Black", "Bush", "Neal", "Owen", "Ryder", "Ford", "Gill"};
 
     private static int getRandomAge() {
-        return (int) (Math.random() * 50 + 20);
+        return ThreadLocalRandom.current().nextInt(20,70);
     }
 
     private static List<Student> sortStudentsByAge(List<Student> students) {
