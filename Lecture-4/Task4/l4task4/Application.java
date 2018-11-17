@@ -7,8 +7,7 @@ public class Application {
     private static List<Runner> getRunners(String[] names){
         List<Runner> runners = new ArrayList<>();
         for (String name : names) {
-            Runner runner = new Runner(name);
-            runners.add(runner);
+            runners.add(new Runner(name));
         }
         return runners;
     }

@@ -6,6 +6,6 @@ public class AscendingMarathonResultsComparator implements Comparator<MarathonRe
 
     @Override
     public int compare(MarathonResult result1, MarathonResult result2) {
-        return Integer.valueOf(result1.getTime()).compareTo(Integer.valueOf(result2.getTime()));
+        return Integer.compare(result1.getTime(),(result2.getTime()));
     }
 }
