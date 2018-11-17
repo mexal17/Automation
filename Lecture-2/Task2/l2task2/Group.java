@@ -1,8 +1,7 @@
 package l2task2;
 
 public class Group {
-
-    private Student[] students;
+    private final Student[] students;
     private final int groupId;
 
     public Group(int groupId, Student[] students) {
@@ -12,10 +11,6 @@ public class Group {
 
     public Student[] getStudents() {
         return students;
-    }
-
-    public int getGroupId() {
-        return groupId;
     }
 
     @Override

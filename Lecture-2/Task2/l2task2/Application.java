@@ -6,11 +6,13 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class Application {
 
+    private static ThreadLocalRandom random = ThreadLocalRandom.current();
+
     private static Student[] createStudents(int studentAmount) {
         Student[] students = new Student[studentAmount];
         for (int i = 0; i < students.length; i++) {
-            students[i] = new Student("user_" + ThreadLocalRandom.current().nextInt(10),
-                    "test_" + ThreadLocalRandom.current().nextInt(10));
+            students[i] = new Student("user_" + random.nextInt(10),
+                    "test_" + random.current().nextInt(10));
         }
         return students;
     }
@@ -24,11 +26,11 @@ public class Application {
     }
 
     private static Ticket getRandomTicket(Ticket[] tickets) {
-        return tickets[ThreadLocalRandom.current().nextInt(tickets.length)];
+        return tickets[random.nextInt(tickets.length)];
     }
 
     private static int getRandomScore() {
-        return ThreadLocalRandom.current().nextInt(1, 6);
+        return random.nextInt(1, 6);
     }
 
     private static List<ExamAnswer> getExamAnswers(Student[] students, Ticket[] tickets) {
@@ -41,35 +43,21 @@ public class Application {
 
     private static void showExamResults(Exam exam) {
         System.out.println("Exam results of " + exam.getGroup() + "->");
-        for (ExamAnswer examAnswer : exam.getExamAnswers()) {
-            System.out.println(examAnswer);
-        }
+        exam.getExamAnswers().forEach(System.out::println);
     }
 
     private static void showMediumGroupScore(Exam exam) {
-        int sumOfAllScores = 0;
-        for (ExamAnswer examAnswer : exam.getExamAnswers()) {
-            sumOfAllScores += examAnswer.getScore();
-        }
-        System.out.println("Medium score of " + exam.getGroup() + " is "
-                + (double) sumOfAllScores / exam.getExamAnswers().size());
+        int sumOfAllScores = exam.getExamAnswers().stream().map(ExamAnswer::getScore).reduce(0, (sum, score) -> sum + score);
+        System.out.println("Medium score of " + exam.getGroup() + " is " + (double) sumOfAllScores / exam.getExamAnswers().size());
     }
 
     private static int bestScoreInGroupExam(Exam exam) {
-        int bestScore = 1;
-        for (ExamAnswer examAnswer : exam.getExamAnswers()) {
-            bestScore = Math.max(examAnswer.getScore(), bestScore);
-        }
-        return bestScore;
+        return exam.getExamAnswers().stream().mapToInt(ExamAnswer::getScore).max().getAsInt();
     }
 
     private static void showStudentsByScores(int score, Exam exam) {
-        for (ExamAnswer examAnswer : exam.getExamAnswers()) {
-            if (examAnswer.getScore() == score) {
-                System.out.println("the best student " + examAnswer.getStudent() +
-                        " got score " + examAnswer.getScore());
-            }
-        }
+        exam.getExamAnswers().stream().filter(examAnswer -> examAnswer.getScore() == score).forEach(examAnswer ->
+                System.out.println("the best student " + examAnswer.getStudent() + " got score " + examAnswer.getScore()));
     }
 
     public static void main(String[] args) {

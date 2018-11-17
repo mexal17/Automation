@@ -4,7 +4,7 @@ import java.util.List;
 
 public class Exam {
     private final Group group;
-    private List<ExamAnswer> examAnswers;
+    private final List<ExamAnswer> examAnswers;
 
     public Exam(Group group, List<ExamAnswer> examAnswers) {
         this.group = group;
