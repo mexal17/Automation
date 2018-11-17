@@ -5,64 +5,26 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.function.Consumer;
 
 public class Application {
 
     private static SimpleDateFormat formatForDate = new SimpleDateFormat("hh:mm:ss:SSS");
 
-    private static List<Double> getArrayList() {
-        List<Double> arrayList = new ArrayList<>();
+    private static List<Double> getFilledList(List<Double> list){
         int counter = 0;
         while (counter < 10000000) {
-            arrayList.add(Math.random());
+            list.add(Math.random());
             counter++;
         }
-        return arrayList;
+        return list;
     }
 
-    private static List<Double> getLinkedList() {
-        List<Double> linkedList = new LinkedList<>();
-        int counter = 0;
-        while (counter < 10000000) {
-            linkedList.add(Math.random());
-            counter++;
-        }
-        return linkedList;
-    }
-
-    private static void showTimeForAddingElementsToList(List<Double> list) {
+    private static void makeListOperation(List<Double> list, Consumer<List<Double>> operation){
         int counter = 0;
         Date startDate = new Date();
         while (counter < 1000) {
-            list.add(5000000, Math.random());
-            counter++;
-        }
-        Date endDate = new Date();
-        long deltaTime = endDate.getTime() - startDate.getTime();
-        System.out.println("startDate = " + formatForDate.format(startDate));
-        System.out.println("endDate = " + formatForDate.format(endDate));
-        System.out.println("deltaTime = " + deltaTime + " milliseconds");
-    }
-
-    private static void showTimeForDeletingElementsFromList(List<Double> list) {
-        int counter = 0;
-        Date startDate = new Date();
-        while (counter < 1000) {
-            list.remove(Math.random());
-            counter++;
-        }
-        Date endDate = new Date();
-        long deltaTime = endDate.getTime() - startDate.getTime();
-        System.out.println("startDate = " + formatForDate.format(startDate));
-        System.out.println("endDate = " + formatForDate.format(endDate));
-        System.out.println("deltaTime = " + deltaTime + " milliseconds");
-    }
-
-    private static void showTimeForFindingElementsInList(List<Double> list) {
-        int counter = 0;
-        Date startDate = new Date();
-        while (counter < 1000) {
-            list.contains(Math.random());
+            operation.accept(list);
             counter++;
         }
         Date endDate = new Date();
@@ -73,19 +35,19 @@ public class Application {
     }
 
     public static void main(String[] args) {
-        List<Double> arrayList = getArrayList();
-        List<Double> linkedList = getLinkedList();
-        System.out.println("---> Adding to ArrayList:");
-        showTimeForAddingElementsToList(arrayList);
-        System.out.println("---> Adding to LinkedList:");
-        showTimeForAddingElementsToList(linkedList);
-        System.out.println("\n---> Deleting from ArrayList:");
-        showTimeForDeletingElementsFromList(arrayList);
-        System.out.println("---> Deleting from LinkedList:");
-        showTimeForDeletingElementsFromList(linkedList);
-        System.out.println("\n---> Searching in ArrayList:");
-        showTimeForFindingElementsInList(arrayList);
-        System.out.println("---> Searching in LinkedList:");
-        showTimeForFindingElementsInList(linkedList);
+        List<Double> arrayList = getFilledList(new ArrayList<>());
+        List<Double> linkedList = getFilledList(new LinkedList<>());
+        System.out.println("---> Adding to ArrayList 1000 elements:");
+        makeListOperation(arrayList,list -> list.add(5000000, Math.random()));
+        System.out.println("---> Adding to LinkedList 1000 elements:");
+        makeListOperation(linkedList,list -> list.add(5000000, Math.random()));
+        System.out.println("\n---> Deleting from ArrayList 1000 elements:");
+        makeListOperation(arrayList,list -> list.remove(Math.random()));
+        System.out.println("---> Deleting from LinkedList 1000 elements:");
+        makeListOperation(linkedList,list -> list.remove(Math.random()));
+        System.out.println("\n---> Searching in ArrayList 1000 elements:");
+        makeListOperation(arrayList,list -> list.contains(Math.random()));
+        System.out.println("---> Searching in LinkedList 1000 elements:");
+        makeListOperation(linkedList,list -> list.contains(Math.random()));
     }
 }
