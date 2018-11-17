@@ -1,25 +1,21 @@
 package l2task2;
 
+import java.util.List;
+
 public class Exam {
-    private final Ticket[] tickets;
     private final Group group;
-    private final int[] scores;
+    private List<ExamAnswer> examAnswers;
 
-    public Exam(Ticket[] tickets, Group group, int[] scores) {
-        this.tickets = tickets;
+    public Exam(Group group, List<ExamAnswer> examAnswers) {
         this.group = group;
-        this.scores = scores;
-    }
-
-    public Ticket[] getTickets() {
-        return tickets;
-    }
-
-    public int[] getScores() {
-        return scores;
+        this.examAnswers = examAnswers;
     }
 
     public Group getGroup() {
         return group;
+    }
+
+    public List<ExamAnswer> getExamAnswers() {
+        return examAnswers;
     }
 }

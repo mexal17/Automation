@@ -1,8 +1,19 @@
 package l2task2;
 
-import static java.lang.Math.random;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class Application {
+
+    private static Student[] createStudents(int studentAmount) {
+        Student[] students = new Student[studentAmount];
+        for (int i = 0; i < students.length; i++) {
+            students[i] = new Student("user_" + ThreadLocalRandom.current().nextInt(10),
+                    "test_" + ThreadLocalRandom.current().nextInt(10));
+        }
+        return students;
+    }
 
     private static Ticket[] createTickets(int amount) {
         Ticket[] tickets = new Ticket[amount];
@@ -12,67 +23,66 @@ public class Application {
         return tickets;
     }
 
-    private static Ticket[] distributeTickets(int studentsAmount, Ticket[] tickets) {
-        Ticket[] distributedTickets = new Ticket[studentsAmount];
-        for (int i = 0; i < distributedTickets.length; i++) {
-            distributedTickets[i] = tickets[(int) (random() * (tickets.length - 1) + 1)];
-        }
-        return distributedTickets;
+    private static Ticket getRandomTicket(Ticket[] tickets) {
+        return tickets[ThreadLocalRandom.current().nextInt(tickets.length)];
     }
 
-    private static int[] divideScores(int studentsAmount) {
-        int[] scores = new int[studentsAmount];
-        for (int i = 0; i < scores.length; i++) {
-            scores[i] = (int) (random() * 5 + 1);
+    private static int getRandomScore() {
+        return ThreadLocalRandom.current().nextInt(1, 6);
+    }
+
+    private static List<ExamAnswer> getExamAnswers(Student[] students, Ticket[] tickets) {
+        List<ExamAnswer> examAnswers = new ArrayList<>();
+        for (Student student : students) {
+            examAnswers.add(new ExamAnswer(student, getRandomTicket(tickets), getRandomScore()));
         }
-        return scores;
+        return examAnswers;
     }
 
     private static void showExamResults(Exam exam) {
-        System.out.println("Exam results of Group #" + exam.getGroup().getGroupId() + "->");
-        for (int i = 0; i < exam.getGroup().getStudents().length; i++) {
-            System.out.println(exam.getGroup().getStudents()[i] + " got ticket= "
-                    + exam.getTickets()[i] + " and score= " + exam.getScores()[i]);
+        System.out.println("Exam results of " + exam.getGroup() + "->");
+        for (ExamAnswer examAnswer : exam.getExamAnswers()) {
+            System.out.println(examAnswer);
         }
     }
 
     private static void showMediumGroupScore(Exam exam) {
         int sumOfAllScores = 0;
-        for (int score : exam.getScores()) {
-            sumOfAllScores += score;
+        for (ExamAnswer examAnswer : exam.getExamAnswers()) {
+            sumOfAllScores += examAnswer.getScore();
         }
-        System.out.println("Medium score of Group#" + exam.getGroup().getGroupId() + " is "
-                + (double) sumOfAllScores / exam.getScores().length);
+        System.out.println("Medium score of " + exam.getGroup() + " is "
+                + (double) sumOfAllScores / exam.getExamAnswers().size());
     }
 
-    private static int bestScoreInGroup(int[] scores) {
+    private static int bestScoreInGroupExam(Exam exam) {
         int bestScore = 1;
-        for (int score : scores) {
-            bestScore = Math.max(score, bestScore);
+        for (ExamAnswer examAnswer : exam.getExamAnswers()) {
+            bestScore = Math.max(examAnswer.getScore(), bestScore);
         }
         return bestScore;
     }
 
     private static void showStudentsByScores(int score, Exam exam) {
-        for (int i = 0; i < exam.getGroup().getStudents().length; i++) {
-            if (exam.getScores()[i] == score) {
-                System.out.println("the best student " + exam.getGroup().getStudents()[i] +
-                        " got score " + exam.getScores()[i]);
+        for (ExamAnswer examAnswer : exam.getExamAnswers()) {
+            if (examAnswer.getScore() == score) {
+                System.out.println("the best student " + examAnswer.getStudent() +
+                        " got score " + examAnswer.getScore());
             }
         }
     }
 
     public static void main(String[] args) {
-        Group group1 = new Group(1, 5);
-        Group group2 = new Group(2, 5);
+        Group group1 = new Group(1, createStudents(5));
+        Group group2 = new Group(2, createStudents(5));
         Ticket[] tickets = createTickets(10);
-        Exam firstExam = new Exam(distributeTickets(group1.getStudents().length, tickets), group1, divideScores(group1.getStudents().length));
-        Exam secondExam = new Exam(distributeTickets(group2.getStudents().length, tickets), group2, divideScores(group2.getStudents().length));
+        Exam firstExam = new Exam(group1, getExamAnswers(group1.getStudents(), tickets));
+        Exam secondExam = new Exam(group2, getExamAnswers(group2.getStudents(), tickets));
         showExamResults(firstExam);
         showExamResults(secondExam);
         showMediumGroupScore(firstExam);
         showMediumGroupScore(secondExam);
-        int maxScore = Math.max(bestScoreInGroup(firstExam.getScores()), bestScoreInGroup(secondExam.getScores()));
+        int maxScore = Math.max(bestScoreInGroupExam(firstExam), bestScoreInGroupExam(secondExam));
         showStudentsByScores(maxScore, firstExam);
         showStudentsByScores(maxScore, secondExam);
     }
