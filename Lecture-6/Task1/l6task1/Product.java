@@ -4,15 +4,15 @@ public class Product {
     private final Coffee coffee;
     private final Pack pack;
     private final String brand;
-    private int price;
-    private int value;
+    private final int price;
+    private final int weight;
 
     public Product(Coffee coffee, Pack pack, String brand) {
         this.coffee = coffee;
         this.pack = pack;
         this.brand = brand;
         this.price = coffee.getPrice() * pack.getCapacity() + pack.getPrice();
-        this.value = pack.getCapacity() + pack.getValue();
+        this.weight = pack.getCapacity() + pack.getWeight();
     }
 
     public Coffee getCoffee() {
@@ -31,20 +31,12 @@ public class Product {
         return price;
     }
 
-    public void setPrice(int price) {
-        this.price = price;
-    }
-
-    public int getValue() {
-        return value;
-    }
-
-    public void setValue(int value) {
-        this.value = value;
+    public int getWeight() {
+        return weight;
     }
 
     @Override
     public String toString() {
-        return "" + brand + ", pr: " + price + ", val: " + value + "| Coffee: " + coffee.toString() + "| Pack: " + pack.toString();
+        return "br: " + brand + ", pr: " + price + ", w: " + weight + "||| Coffee: " + coffee.toString() + "||| Pack: " + pack.toString();
     }
 }

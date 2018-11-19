@@ -1,17 +1,19 @@
 package l6task1;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Van {
-    private final int maxValue;
+    private final int vanCapacity;
     private List<Product> products;
 
     public Van(int maxValue) {
-        this.maxValue = maxValue;
+        this.vanCapacity = maxValue;
+        this.products = new ArrayList<>();
     }
 
-    public int getMaxValue() {
-        return maxValue;
+    public int getVanCapacity() {
+        return vanCapacity;
     }
 
     public List<Product> getProducts() {

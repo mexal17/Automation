@@ -2,13 +2,13 @@ package l6task1;
 
 public class Pack {
     private final String type;
-    private final int value;
-    private int price;
-    private int capacity;
+    private final int weight;
+    private final int price;
+    private final int capacity;
 
-    public Pack(String type, int value, int price, int capacity) {
+    public Pack(String type, int weight, int price, int capacity) {
         this.type = type;
-        this.value = value;
+        this.weight = weight;
         this.price = price;
         this.capacity = capacity;
     }
@@ -17,28 +17,20 @@ public class Pack {
         return type;
     }
 
-    public int getValue() {
-        return value;
+    public int getWeight() {
+        return weight;
     }
 
     public int getPrice() {
         return price;
     }
 
-    public void setPrice(int price) {
-        this.price = price;
-    }
-
     public int getCapacity() {
         return capacity;
     }
 
-    public void setCapacity(int capacity) {
-        this.capacity = capacity;
-    }
-
     @Override
     public String toString() {
-        return "" + type + ", val:" + value + ", pr:" + price + ", cap:" + capacity;
+        return "t: " + type + ", w: " + weight + ", pr: " + price + ", cap: " + capacity;
     }
 }
