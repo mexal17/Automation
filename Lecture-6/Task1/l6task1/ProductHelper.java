@@ -5,24 +5,14 @@ import java.util.List;
 public class ProductHelper {
 
     public static void showElementsOfCollection(List<?> collection) {
-        for (Object element : collection) {
-            System.out.println(element.toString());
-        }
+        collection.forEach(System.out::println);
     }
 
-    public static int getSummaryProductsValue(List<Product> products) {
-        int summaryProductsValue = 0;
-        for (Product product : products) {
-            summaryProductsValue += product.getWeight();
-        }
-        return summaryProductsValue;
+    public static int getSummaryProductsWeight(List<Product> products){
+        return products.stream().map(Product::getWeight).reduce(0,(weight, sum) -> weight+sum);
     }
 
     public static int getSummaryProductsPrice(List<Product> products) {
-        int summaryProductPrice = 0;
-        for (Product product : products) {
-            summaryProductPrice += product.getPrice();
-        }
-        return summaryProductPrice;
+        return products.stream().map(Product::getPrice).reduce(0,(price,sum) -> price+sum);
     }
 }

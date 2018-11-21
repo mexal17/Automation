@@ -37,6 +37,6 @@ public class Product {
 
     @Override
     public String toString() {
-        return "br: " + brand + ", pr: " + price + ", w: " + weight + "||| Coffee: " + coffee.toString() + "||| Pack: " + pack.toString();
+        return "br: " + brand + ", pr: " + price + ", w: " + weight + " ||| Coffee = " + coffee.toString() + " ||| Pack = " + pack.toString();
     }
 }

@@ -31,6 +31,6 @@ public class Pack {
 
     @Override
     public String toString() {
-        return "t: " + type + ", w: " + weight + ", pr: " + price + ", cap: " + capacity;
+        return "" + type + ", w: " + weight + ", pr: " + price + ", cap: " + capacity;
     }
 }
