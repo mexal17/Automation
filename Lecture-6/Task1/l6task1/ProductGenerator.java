@@ -4,19 +4,40 @@ import l6task1.factories.CoffeeFactory;
 import l6task1.factories.PackFactory;
 import l6task1.factories.ProductFactory;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class ProductGenerator {
-    public static final String[] COFFEE_TYPE = {"bean", "ground", "instant"};
-    public static final int[] COFFEE_PRICE = {1, 2, 3};
-    public static final int[] PACK_CAPACITY = {50, 100, 200, 300, 500};
-    public static final int[] PACK_WEIGHT = {5, 10, 20, 30, 50};
-    public static final int[] PACK_PRICE = {1, 2, 3, 4, 5};
+    private static final String INPUT_FILE = "c:/Work folder/Automation/Lesson#8/INPUT_FILE.txt";
+    private static String[] coffeeType;
+    private static int[] coffeePrice;
+    private static int[] packCapacity;
+    private static int[] packWeight;
+    private static int[] packPrice;
     private static List<Coffee> allCoffees;
     private static List<Pack> allPacks;
-    private static ThreadLocalRandom threadLocalRandom = ThreadLocalRandom.current();
+    private static final ThreadLocalRandom threadLocalRandom = ThreadLocalRandom.current();
+
+    public static void readProductDataFromFile() {
+        try (BufferedReader fileReader = new BufferedReader(new FileReader(INPUT_FILE))) {
+            coffeeType = fileReader.readLine().split(";");
+            coffeePrice = parseStringToIntArrays(fileReader);
+            packCapacity = parseStringToIntArrays(fileReader);
+            packWeight = parseStringToIntArrays(fileReader);
+            packPrice = parseStringToIntArrays(fileReader);
+        } catch (IOException e) {
+            throw new FileReadingRuntimeException("Error during reading INPUT_FILE ->\n" + e.getMessage());
+        }
+    }
+
+    private static int[] parseStringToIntArrays(BufferedReader fileReader) throws IOException {
+        return Arrays.stream(fileReader.readLine().split(";")).map(String::trim).mapToInt(Integer::parseInt).toArray();
+    }
 
     private static List<Coffee> getAllCoffee() {
         List<Coffee> allCoffees = new ArrayList<>();
@@ -46,7 +67,7 @@ public class ProductGenerator {
         if (allCoffees == null) {
             allCoffees = getAllCoffee();
         }
-        return allCoffees.get(ThreadLocalRandom.current().nextInt(allCoffees.size()));
+        return allCoffees.get(threadLocalRandom.nextInt(allCoffees.size()));
     }
 
     public static Pack getRandomPack() {
@@ -57,22 +78,28 @@ public class ProductGenerator {
     }
 
     public static String[] getCoffeeTypes() {
-        return COFFEE_TYPE;
+        return coffeeType;
     }
 
     public static int[] getCoffeePrices() {
-        return COFFEE_PRICE;
+        return coffeePrice;
     }
 
     public static int[] getPackCapacity() {
-        return PACK_CAPACITY;
+        return packCapacity;
     }
 
     public static int[] getPackWeight() {
-        return PACK_WEIGHT;
+        return packWeight;
     }
 
     public static int[] getPackPrices() {
-        return PACK_PRICE;
+        return packPrice;
+    }
+
+    private static class FileReadingRuntimeException extends RuntimeException {
+        FileReadingRuntimeException(String message) {
+            super(message);
+        }
     }
 }
