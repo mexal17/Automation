@@ -3,27 +3,25 @@ package l6task1.factories;
 import l6task1.Product;
 import l6task1.ProductBrand;
 
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class ProductFactory {
 
-    public static List<Product> createProducts(ProductBrand productBrand, int productsAmount) {
-        List<Product> products = new ArrayList<>();
+    public static List<Product> createProducts(ProductBrand productBrand) {
         switch (productBrand) {
             case NESCAFE: {
-                products = new NescafeProductFactory().createProducts(productsAmount);
-                break;
+                return new NescafeProductFactory().createProducts(50);
             }
             case PELE: {
-                products = new PeleProductFactory().createProducts(productsAmount);
-                break;
+                return new PeleProductFactory().createProducts(50);
             }
             case TCHIBO: {
-                products = new TchiboProductFactory().createProducts(productsAmount);
-                break;
+                return new TchiboProductFactory().createProducts(50);
+            }
+            default: {
+                return Collections.emptyList();
             }
         }
-        return products;
     }
 }

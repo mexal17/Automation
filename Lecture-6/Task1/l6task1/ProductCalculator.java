@@ -1,8 +1,8 @@
 package l6task1;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class ProductCalculator {
 
@@ -12,28 +12,14 @@ public class ProductCalculator {
     }
 
     public static List<Product> findProducts(List<Product> products, String sort, int weight) {
-        List<Product> sortedProducts = new ArrayList<>();
-        for (Product product : products) {
-            if (product.getCoffee().getSort().equals(sort) && product.getWeight() == weight) {
-                sortedProducts.add(product);
-            }
-        }
-        return sortedProducts;
+        return products.stream().filter(product -> product.getCoffee().getSort().equals(sort) && product.getWeight() == weight).collect(Collectors.toList());
     }
 
     public static int getProductMinPriceInList(List<Product> products) {
-        int minPrice = products.get(0).getPrice();
-        for (Product product : products) {
-            minPrice = Math.min(minPrice, product.getPrice());
-        }
-        return minPrice;
+        return products.stream().mapToInt(Product::getPrice).min().getAsInt();
     }
 
     public static int getProductMinWeightInList(List<Product> products) {
-        int minWeight = products.get(0).getWeight();
-        for (Product product : products) {
-            minWeight = Math.min(minWeight, product.getPrice());
-        }
-        return minWeight;
+        return products.stream().mapToInt(Product::getWeight).min().getAsInt();
     }
 }

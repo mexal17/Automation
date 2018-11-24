@@ -19,8 +19,8 @@ public class VanFiller {
         }
         products.removeAll(van.getProducts());
         System.out.println("----> Van is filled. \nVan capacity = " + van.getVanCapacity() +
-                "\nProductsWeightInVan = " + productsWeightInVan +
-                "\nLefted place in van = " + (van.getVanCapacity() - productsWeightInVan) +
+                "\nProducts Weight in van = " + productsWeightInVan +
+                "\nLeft place in van = " + (van.getVanCapacity() - productsWeightInVan) +
                 "\nMin Weight In left List = " + ProductCalculator.getProductMinWeightInList(products) +
                 "\nMoney is left = " + money +
                 "\nMin Price In List = " + ProductCalculator.getProductMinPriceInList(products));

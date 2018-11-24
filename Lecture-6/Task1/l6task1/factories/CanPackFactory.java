@@ -12,7 +12,7 @@ public class CanPackFactory implements IPackFactory {
     public List<Pack> createPacks() {
         List<Pack> packs = new ArrayList<>();
         for (int i = 0; i < ProductGenerator.getPackCapacity().length; i++) {
-            packs.add(new Pack(PackType.CAN.getType(), 2 * ProductGenerator.getPackWeight()[i], 2 * ProductGenerator.getPackPrices()[i], ProductGenerator.getPackCapacity()[i]));
+            packs.add(new Pack(PackType.CAN.name(), 2 * ProductGenerator.getPackWeight()[i], 2 * ProductGenerator.getPackPrices()[i], ProductGenerator.getPackCapacity()[i]));
         }
         return packs;
     }

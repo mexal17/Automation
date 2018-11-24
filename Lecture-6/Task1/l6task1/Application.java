@@ -11,6 +11,6 @@ public class Application {
         System.out.println("\n-------> getSortedProductsByPrice:");
         ProductHelper.printElementsOfCollection(ProductCalculator.getSortedProductsByPrice(van.getProducts()));
         System.out.println("\n-------> Search products in List with params = sort -> ROBUSTA, weight -> 220: ");
-        ProductHelper.printElementsOfCollection(ProductCalculator.findProducts(van.getProducts(), CoffeeSort.ROBUSTA.getSort(), 220));
+        ProductHelper.printElementsOfCollection(ProductCalculator.findProducts(van.getProducts(), CoffeeSort.ROBUSTA.name(), 220));
     }
 }

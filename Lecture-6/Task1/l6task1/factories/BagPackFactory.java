@@ -12,7 +12,7 @@ public class BagPackFactory implements IPackFactory {
     public List<Pack> createPacks() {
         List<Pack> packs = new ArrayList<>();
         for (int i = 0; i < ProductGenerator.getPackCapacity().length; i++) {
-            packs.add(new Pack(PackType.BAG.getType(), ProductGenerator.getPackWeight()[i], ProductGenerator.getPackPrices()[i], ProductGenerator.getPackCapacity()[i]));
+            packs.add(new Pack(PackType.BAG.name(), ProductGenerator.getPackWeight()[i], ProductGenerator.getPackPrices()[i], ProductGenerator.getPackCapacity()[i]));
         }
         return packs;
     }

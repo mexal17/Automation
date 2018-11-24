@@ -12,7 +12,7 @@ public class RobustaCoffeeFactory implements ICoffeeFactory {
     public List<Coffee> createCoffee() {
         List<Coffee> coffees = new ArrayList<>();
         for (int i = 0; i < ProductGenerator.getCoffeeTypes().length; i++) {
-            coffees.add(new Coffee(ProductGenerator.getCoffeeTypes()[i], CoffeeSort.ROBUSTA.getSort(), 2 * ProductGenerator.getCoffeePrices()[i]));
+            coffees.add(new Coffee(ProductGenerator.getCoffeeTypes()[i], CoffeeSort.ROBUSTA.name(), 2 * ProductGenerator.getCoffeePrices()[i]));
         }
         return coffees;
     }

@@ -19,14 +19,6 @@ public class Product {
         return coffee;
     }
 
-    public Pack getPack() {
-        return pack;
-    }
-
-    public String getBrand() {
-        return brand;
-    }
-
     public int getPrice() {
         return price;
     }

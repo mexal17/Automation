@@ -7,13 +7,14 @@ import l6task1.factories.ProductFactory;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
+import java.util.stream.Collectors;
 
 public class ProductGenerator {
-    private static final String INPUT_FILE = "c:/Work folder/Automation/Lesson#8/INPUT_FILE.txt";
+    private static final String INPUT_FILE = "resources/INPUT_FILE.txt";
     private static String[] coffeeType;
     private static int[] coffeePrice;
     private static int[] packCapacity;
@@ -21,7 +22,7 @@ public class ProductGenerator {
     private static int[] packPrice;
     private static List<Coffee> allCoffees;
     private static List<Pack> allPacks;
-    private static final ThreadLocalRandom threadLocalRandom = ThreadLocalRandom.current();
+    private static final ThreadLocalRandom random = ThreadLocalRandom.current();
 
     public static void readProductDataFromFile() {
         try (BufferedReader fileReader = new BufferedReader(new FileReader(INPUT_FILE))) {
@@ -40,41 +41,29 @@ public class ProductGenerator {
     }
 
     private static List<Coffee> getAllCoffee() {
-        List<Coffee> allCoffees = new ArrayList<>();
-        for (CoffeeSort coffeeSort : CoffeeSort.values()) {
-            allCoffees.addAll(CoffeeFactory.createCoffees(coffeeSort));
-        }
-        return allCoffees;
+        return Arrays.stream(CoffeeSort.values()).map(CoffeeFactory::createCoffees).flatMap(Collection::stream).collect(Collectors.toList());
     }
 
     private static List<Pack> getAllPacks() {
-        List<Pack> allPacks = new ArrayList<>();
-        for (PackType packType : PackType.values()) {
-            allPacks.addAll(PackFactory.createPacks(packType));
-        }
-        return allPacks;
+        return Arrays.stream(PackType.values()).map(PackFactory::createPacks).flatMap(Collection::stream).collect(Collectors.toList());
     }
 
     public static List<Product> getAllProducts() {
-        List<Product> allProducts = new ArrayList<>();
-        for (ProductBrand brand : ProductBrand.values()) {
-            allProducts.addAll(ProductFactory.createProducts(brand, 50));
-        }
-        return allProducts;
+        return Arrays.stream(ProductBrand.values()).map(ProductFactory::createProducts).flatMap(Collection::stream).collect(Collectors.toList());
     }
 
     public static Coffee getRandomCoffee() {
         if (allCoffees == null) {
             allCoffees = getAllCoffee();
         }
-        return allCoffees.get(threadLocalRandom.nextInt(allCoffees.size()));
+        return allCoffees.get(random.nextInt(allCoffees.size()));
     }
 
     public static Pack getRandomPack() {
         if (allPacks == null) {
             allPacks = getAllPacks();
         }
-        return allPacks.get(threadLocalRandom.nextInt(allPacks.size()));
+        return allPacks.get(random.nextInt(allPacks.size()));
     }
 
     public static String[] getCoffeeTypes() {
@@ -95,11 +84,5 @@ public class ProductGenerator {
 
     public static int[] getPackPrices() {
         return packPrice;
-    }
-
-    private static class FileReadingRuntimeException extends RuntimeException {
-        FileReadingRuntimeException(String message) {
-            super(message);
-        }
     }
 }
