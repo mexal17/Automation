@@ -11,14 +11,16 @@ import java.util.stream.Collectors;
 
 public class Application {
 
-    private final static String INPUT_FILE_NAME = "c:/Work folder/Automation/Lesson#8/StudentsList.txt";
-    private final static String OUTPUT_FILE_NAME = "c:/Work folder/Automation/Lesson#8/OUT_PUT_StudentsList.txt";
+    private final static String INPUT_FILE_NAME = "resources/StudentsList.txt";
+    private final static String OUTPUT_FILE_NAME = "resources/OUT_PUT_StudentsList.txt";
+    private final static String PHONE_NUMBER_PATTERN = "\\+(375)[0-9]{9}";
+    private final static String EMAIL_PATTERN = "[a-zA-z\\d\\.\\+\\-]{2,256}@[a-zA-Z]+\\.[a-z]{2,6}";
 
-    private static String getWordFromStringUsingRegex(String textLine, String regex ){
+    private static String getWordFromStringUsingRegex(String textLine, String regex) {
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(textLine);
         String searchedWord = null;
-        if (matcher.find()){
+        if (matcher.find()) {
             searchedWord = matcher.group();
         }
         return searchedWord;
@@ -26,18 +28,14 @@ public class Application {
 
     private static List<Student> getListStudentsFromFile(String fileName) {
         List<Student> students = new ArrayList<>();
-        try {
-            FileInputStream fileInputStream = new FileInputStream(fileName);
-            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(fileInputStream));
+        try (BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(new FileInputStream(fileName)))) {
             String textLine;
             while ((textLine = bufferedReader.readLine()) != null) {
                 String[] row = textLine.split(" ");
                 students.add(new Student(students.size() + 1, row[0], row[1],
-                        Integer.valueOf(row[2]), getWordFromStringUsingRegex(textLine,"\\+(375)[0-9]{9}"),
-                        getWordFromStringUsingRegex(textLine,"[a-zA-z\\d\\.\\+\\-]{2,256}@[a-zA-Z]+\\.[a-z]{2,6}")));
+                        Integer.valueOf(row[2]), getWordFromStringUsingRegex(textLine, PHONE_NUMBER_PATTERN),
+                        getWordFromStringUsingRegex(textLine, EMAIL_PATTERN)));
             }
-        } catch (FileNotFoundException e) {
-            System.out.println("Error: file is not found. " + e.getMessage());
         } catch (IOException e) {
             System.out.println("Error during file reading. " + e.getMessage());
         }
@@ -45,44 +43,24 @@ public class Application {
     }
 
     private static void printListIntoFile(String fileName, List<Student> students, String typeOperation) {
-        BufferedWriter bufferedWriter = null;
-        try {
-            bufferedWriter = new BufferedWriter(new FileWriter(new File(fileName), true));
+        try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(new File(fileName), true))) {
             bufferedWriter.write(typeOperation + "\n");
             for (Student student : students) {
                 bufferedWriter.write(student.toString() + "\n");
             }
-        } catch (FileNotFoundException e) {
-            System.out.println("Error: file is not found. " + e.getMessage());
         } catch (IOException e) {
             System.out.println("Error during file writing. " + e.getMessage());
-        }
-        try {
-            if (bufferedWriter != null)
-                bufferedWriter.close();
-        } catch (IOException e) {
-            System.out.println("Error during file closing. " + e.getMessage());
         }
     }
 
     private static void printMapIntoFile(String fileName, Map<Integer, Student> studentMap, String typeOperation) {
-        BufferedWriter bufferedWriter = null;
-        try {
-            bufferedWriter = new BufferedWriter(new FileWriter(new File(fileName), true));
+        try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(new File(fileName), true))) {
             bufferedWriter.write(typeOperation + "\n");
             for (Map.Entry<Integer, Student> entryStudent : studentMap.entrySet()) {
                 bufferedWriter.write(entryStudent.toString() + "\n");
             }
-        } catch (FileNotFoundException e) {
-            System.out.println("Error: file is not found. " + e.getMessage());
         } catch (IOException e) {
             System.out.println("Error during file writing. " + e.getMessage());
-        }
-        try {
-            if (bufferedWriter != null)
-                bufferedWriter.close();
-        } catch (IOException e) {
-            System.out.println("Error during file closing. " + e.getMessage());
         }
     }
 

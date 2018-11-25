@@ -1,0 +1,10 @@
+Kate Smith 35 +375259001122 simple@example.com
+Bob Jeff 41 +375291110033 sdofuw234@wer.wer
+Roy Little 23 +37524sdf23411 very.common@example.com
+Jane Black 51 +375259996688 wefw@@efrw.34
+Tom Bush 28 3753409809822 mail.with+symbol@example.com
+Nick Neal 45 +000045364565 Abc.example.com
+Ann Owen 33 +37529445544 ASD@12.12
+Jack Ryder 29 +37524555423411 ONLINER@tut.by
+Eva Ford 39 +375294452277 pasta@foo.roo
+Adam Gill 19 +375229990044 123123@go.by
