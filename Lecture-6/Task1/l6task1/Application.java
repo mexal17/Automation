@@ -1,5 +1,12 @@
 package l6task1;
 
+import l6task1.constant.CoffeeSort;
+import l6task1.model.Van;
+import l6task1.util.ProductCalculator;
+import l6task1.util.ProductGenerator;
+import l6task1.util.ProductHelper;
+import l6task1.util.VanFiller;
+
 public class Application {
 
     public static void main(String[] args) {

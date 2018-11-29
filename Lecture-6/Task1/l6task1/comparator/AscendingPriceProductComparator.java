@@ -1,4 +1,6 @@
-package l6task1;
+package l6task1.comparator;
+
+import l6task1.model.Product;
 
 import java.util.Comparator;
 

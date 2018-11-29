@@ -1,4 +1,6 @@
-package l6task1;
+package l6task1.model;
+
+import l6task1.model.Product;
 
 import java.util.ArrayList;
 import java.util.List;

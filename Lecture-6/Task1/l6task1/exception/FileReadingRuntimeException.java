@@ -1,7 +1,7 @@
-package l6task1;
+package l6task1.exception;
 
 public class FileReadingRuntimeException extends RuntimeException {
-    FileReadingRuntimeException(String message) {
+    public FileReadingRuntimeException(String message) {
         super(message);
     }
 }

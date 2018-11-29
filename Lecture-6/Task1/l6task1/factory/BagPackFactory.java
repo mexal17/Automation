@@ -1,8 +1,8 @@
-package l6task1.factories;
+package l6task1.factory;
 
-import l6task1.Pack;
-import l6task1.PackType;
-import l6task1.ProductGenerator;
+import l6task1.model.Pack;
+import l6task1.constant.PackType;
+import l6task1.util.ProductGenerator;
 
 import java.util.ArrayList;
 import java.util.List;

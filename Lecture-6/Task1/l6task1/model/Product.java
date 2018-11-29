@@ -1,4 +1,7 @@
-package l6task1;
+package l6task1.model;
+
+import l6task1.model.Coffee;
+import l6task1.model.Pack;
 
 public class Product {
     private final Coffee coffee;

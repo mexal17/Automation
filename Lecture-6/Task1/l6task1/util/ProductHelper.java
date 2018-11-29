@@ -1,4 +1,7 @@
-package l6task1;
+package l6task1.util;
+
+import l6task1.exception.FileWritingRuntimeException;
+import l6task1.model.Product;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;
@@ -8,7 +11,7 @@ import java.util.Date;
 import java.util.List;
 
 public class ProductHelper {
-    private static final String OUTPUT_FILE = "resources/OUTPUT_FILE.txt";
+    private static final String OUTPUT_FILE = "./Lecture-6/Task1/l6task1/resources/OUTPUT_FILE.txt";
     private static final SimpleDateFormat formatForDate = new SimpleDateFormat("hh:mm:ss:SSS");
 
     public static void printElementsOfCollection(List<?> collection) {

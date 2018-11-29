@@ -1,4 +1,7 @@
-package l6task1;
+package l6task1.util;
+
+import l6task1.comparator.AscendingPriceProductComparator;
+import l6task1.model.Product;
 
 import java.util.Collections;
 import java.util.List;
@@ -11,8 +14,11 @@ public class ProductCalculator {
         return products;
     }
 
-    public static List<Product> findProducts(List<Product> products, String sort, int weight) {
-        return products.stream().filter(product -> product.getCoffee().getSort().equals(sort) && product.getWeight() == weight).collect(Collectors.toList());
+    public static List<Product> findProducts(List<Product> products, String coffeeSort, int weight) {
+        if (weight <= 0) {
+            throw new IllegalArgumentException("Incorrect value of 'weight' in 'findProducts' method");
+        }
+        return products.stream().filter(product -> product.getCoffee().getSort().equals(coffeeSort) && product.getWeight() == weight).collect(Collectors.toList());
     }
 
     public static int getProductMinPriceInList(List<Product> products) {

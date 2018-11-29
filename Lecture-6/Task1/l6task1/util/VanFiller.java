@@ -1,4 +1,7 @@
-package l6task1;
+package l6task1.util;
+
+import l6task1.model.Product;
+import l6task1.model.Van;
 
 import java.util.Collections;
 import java.util.List;

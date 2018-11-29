@@ -1,4 +1,4 @@
-package l6task1;
+package l6task1.model;
 
 public class Coffee {
 

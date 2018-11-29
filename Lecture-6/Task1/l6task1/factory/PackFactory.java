@@ -1,12 +1,15 @@
-package l6task1.factories;
+package l6task1.factory;
 
-import l6task1.Pack;
-import l6task1.PackType;
+import l6task1.constant.PackType;
+import l6task1.model.Pack;
 
 import java.util.Collections;
 import java.util.List;
 
 public class PackFactory {
+
+    private PackFactory() {
+    }
 
     public static List<Pack> createPacks(PackType packType) {
         switch (packType) {

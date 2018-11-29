@@ -1,8 +1,8 @@
-package l6task1.factories;
+package l6task1.factory;
 
-import l6task1.Product;
-import l6task1.ProductBrand;
-import l6task1.ProductGenerator;
+import l6task1.model.Product;
+import l6task1.constant.ProductBrand;
+import l6task1.util.ProductGenerator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,7 +12,7 @@ public class NescafeProductFactory implements IProductFactory {
     public List<Product> createProducts(int productsAmount) {
         List<Product> products = new ArrayList<>();
         for (int i = 0; i < productsAmount; i++) {
-            products.add(new Product(ProductGenerator.getRandomCoffee(), ProductGenerator.getRandomPack(), ProductBrand.NESCAFE.getBrand()));
+            products.add(new Product(ProductGenerator.getRandomCoffee(), ProductGenerator.getRandomPack(), ProductBrand.NESCAFE.name()));
         }
         return products;
     }
