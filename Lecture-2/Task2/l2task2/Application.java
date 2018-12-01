@@ -6,13 +6,13 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class Application {
 
-    private static ThreadLocalRandom random = ThreadLocalRandom.current();
+    private static ThreadLocalRandom RANDOM = ThreadLocalRandom.current();
 
     private static Student[] createStudents(int studentAmount) {
         Student[] students = new Student[studentAmount];
         for (int i = 0; i < students.length; i++) {
-            students[i] = new Student("user_" + random.nextInt(10),
-                    "test_" + random.current().nextInt(10));
+            students[i] = new Student("user_" + RANDOM.nextInt(10),
+                    "test_" + RANDOM.nextInt(10));
         }
         return students;
     }
@@ -26,11 +26,11 @@ public class Application {
     }
 
     private static Ticket getRandomTicket(Ticket[] tickets) {
-        return tickets[random.nextInt(tickets.length)];
+        return tickets[RANDOM.nextInt(tickets.length)];
     }
 
     private static int getRandomScore() {
-        return random.nextInt(1, 6);
+        return RANDOM.nextInt(1, 6);
     }
 
     private static List<ExamAnswer> getExamAnswers(Student[] students, Ticket[] tickets) {
