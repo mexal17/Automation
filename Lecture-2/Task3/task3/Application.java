@@ -7,21 +7,23 @@ public class Application {
     private static String operand = "";
     private static boolean isAppQuit = false;
 
-    private static void getResult(String operand, double firstDigit, double secondDigit) {
-
+    public static double getResult(String operand, double firstDigit, double secondDigit) {
+        double result = 0;
         switch (operand) {
             case "+":
-                System.out.println("result = " + (firstDigit + secondDigit));
+                result = firstDigit + secondDigit;
                 break;
             case "-":
-                System.out.println("result = " + (firstDigit - secondDigit));
+                result = firstDigit - secondDigit;
                 break;
             case "*":
-                System.out.println("result = " + (firstDigit * secondDigit));
+                result = firstDigit * secondDigit;
                 break;
             case "/":
-                System.out.println("result = " + (firstDigit / secondDigit));
+                result = firstDigit / secondDigit;
+                break;
         }
+        return result;
     }
 
     private static double getDigit(Scanner scanner) {
@@ -82,7 +84,11 @@ public class Application {
             if (isAppQuit) {
                 break;
             }
-            getResult(operand, firstDigit, secondDigit);
+            if (operand.equals("/") && secondDigit == 0) {
+                System.out.println("Error: division by zero.");
+                continue;
+            }
+            System.out.println(getResult(operand, firstDigit, secondDigit));
         }
     }
 }
