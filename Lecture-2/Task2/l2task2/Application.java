@@ -6,7 +6,7 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class Application {
 
-    private static ThreadLocalRandom RANDOM = ThreadLocalRandom.current();
+    private static final ThreadLocalRandom RANDOM = ThreadLocalRandom.current();
 
     private static Student[] createStudents(int studentAmount) {
         Student[] students = new Student[studentAmount];
