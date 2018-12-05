@@ -2,7 +2,7 @@
 <suite name="ApplicationSuite">
     <test name="CalculatorTest">
         <classes>
-            <class name="calculator.ApplicationTest"/>
+            <class name="calculator.CalculatorTests"/>
         </classes>
     </test>
 </suite>
