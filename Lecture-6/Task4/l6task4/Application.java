@@ -13,7 +13,7 @@ public class Application {
 
     private static SimpleDateFormat formatForDate = new SimpleDateFormat("hh:mm:ss:SSS");
 
-    private static double getMathRandom(){
+    private static double getRandomDouble(){
         return Math.random();
     }
 
@@ -44,9 +44,9 @@ public class Application {
         List<Double> arrayList = getFilledList(new ArrayList<>());
         List<Double> linkedList = getFilledList(new LinkedList<>());
         System.out.println("---> Adding to ArrayList 1000 elements:");
-        makeListOperation(arrayList,list -> list.add(INDEX, getMathRandom()));
+        makeListOperation(arrayList,list -> list.add(INDEX, getRandomDouble()));
         System.out.println("---> Adding to LinkedList 1000 elements:");
-        makeListOperation(linkedList,list -> list.add(INDEX, getMathRandom()));
+        makeListOperation(linkedList,list -> list.add(INDEX, getRandomDouble()));
         System.out.println("\n---> Deleting from ArrayList 1000 elements:");
         makeListOperation(arrayList,list -> list.remove(Math.random()));
         System.out.println("---> Deleting from LinkedList 1000 elements:");
