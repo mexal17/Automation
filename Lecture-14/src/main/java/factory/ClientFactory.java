@@ -12,15 +12,12 @@ public class ClientFactory {
 
     public static IRestClient getInstance(LibraryType libraryType) {
         switch (libraryType) {
-            case APACHE_HTTP: {
+            case APACHE_HTTP:
                 return new ApacheClient();
-            }
-            case REST_ASSURED: {
+            case REST_ASSURED:
                 return new RestAssuredClient();
-            }
-            default: {
-                return null;
-            }
+            default:
+                throw new IllegalArgumentException("Client type is not supported");
         }
     }
 }

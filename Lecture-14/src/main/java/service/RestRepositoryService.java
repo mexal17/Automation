@@ -8,26 +8,25 @@ import model.GitUser;
 
 import java.util.List;
 
-public class ApacheRepositoryService implements IRepositoryService {
+public class RestRepositoryService implements IRepositoryService {
 
     private final IRestClient restClient;
-    private static final String URI_COLLABORATORS = "https://api.github.com/repos/mexal17/Lecture-2/collaborators";
     private GitHubResponse gitHubResponseFromGet;
     private GitHubResponse gitHubResponseFromPut;
 
-    public ApacheRepositoryService(IRestClient restClient) {
+    public RestRepositoryService(IRestClient restClient) {
         this.restClient = restClient;
     }
 
     @Override
     public List<GitUser> getCollaborators() {
-        gitHubResponseFromGet = restClient.executeRequest(URI_COLLABORATORS, HttpMethodType.GET);
+        gitHubResponseFromGet = restClient.executeRequest(HttpMethodType.GET);
         return Deserializer.getListUsersFromJson(gitHubResponseFromGet);
     }
 
     @Override
     public String sendInvitation() {
-        gitHubResponseFromPut = restClient.executeRequest(URI_COLLABORATORS + "/user5", HttpMethodType.PUT);
+        gitHubResponseFromPut = restClient.executeRequest(HttpMethodType.PUT);
         return gitHubResponseFromPut.getBody();
     }
 
@@ -37,5 +36,9 @@ public class ApacheRepositoryService implements IRepositoryService {
 
     public GitHubResponse getGitHubResponseFromPut() {
         return gitHubResponseFromPut;
+    }
+
+    public IRestClient getRestClient() {
+        return restClient;
     }
 }

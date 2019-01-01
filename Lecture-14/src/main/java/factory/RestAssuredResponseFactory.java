@@ -9,7 +9,9 @@ import static com.jayway.restassured.RestAssured.given;
 
 public class RestAssuredResponseFactory {
 
-    private static final String TOKEN = "9831d26fead1dcb4cd9419a9107a84555742f0a3";
+    private static final String TOKEN = "2ec8d0055afbe6924a8f9ff143838a9c5c02535d";
+    private static final String URI_COLLABORATORS = "https://api.github.com/repos/mexal17/Lecture-2/collaborators";
+    private static final String URI_SEND_INVITATION = "https://api.github.com/repos/mexal17/Lecture-2/collaborators/user5";
     private static RequestSpecification requestSpecification;
 
     private RestAssuredResponseFactory() {
@@ -22,19 +24,16 @@ public class RestAssuredResponseFactory {
         }
     }
 
-    public static Response generateRequest(String url, HttpMethodType methodType) {
+    public static Response getResponse(HttpMethodType methodType) {
         switch (methodType) {
-            case GET: {
+            case GET:
                 setup();
-                return requestSpecification.get(url);
-            }
-            case PUT: {
+                return requestSpecification.get(URI_COLLABORATORS);
+            case PUT:
                 setup();
-                return requestSpecification.put(url);
-            }
-            default: {
-                return null;
-            }
+                return requestSpecification.put(URI_SEND_INVITATION);
+            default:
+                throw new IllegalArgumentException("Method type is not supported");
         }
     }
 }

@@ -1,9 +1,11 @@
 package client;
 
 import constant.HttpMethodType;
+import constant.LibraryType;
 import model.GitHubResponse;
 
 public interface IRestClient {
+    GitHubResponse executeRequest(HttpMethodType methodType);
 
-    GitHubResponse executeRequest(String url, HttpMethodType methodType);
+    LibraryType getType();
 }

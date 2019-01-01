@@ -16,46 +16,43 @@ import static util.PrintHelper.printInfoAboutUriSyntaxException;
 
 public class ApacheHttpResponseFactory {
 
-    private static final String TOKEN = "9831d26fead1dcb4cd9419a9107a84555742f0a3";
-    private static final CloseableHttpClient httpClient = HttpClients.custom().build();
+    private static final String TOKEN = "2ec8d0055afbe6924a8f9ff143838a9c5c02535d";
+    private static final String URI_COLLABORATORS = "https://api.github.com/repos/mexal17/Lecture-2/collaborators";
+    private static final String URI_SEND_INVITATION = "https://api.github.com/repos/mexal17/Lecture-2/collaborators/user5";
+    private static final CloseableHttpClient HTTP_CLIENT = HttpClients.custom().build();
 
     private ApacheHttpResponseFactory() {
     }
 
-    public static CloseableHttpResponse generateRequest(String url, HttpMethodType methodType) {
+    public static CloseableHttpResponse getResponse(HttpMethodType methodType) {
+        CloseableHttpResponse httpResponse = null;
         switch (methodType) {
-            case GET: {
-                CloseableHttpResponse httpResponse = null;
+            case GET:
                 try {
-                    URIBuilder builderColl = new URIBuilder(url);
-                    builderColl.setParameter("access_token", TOKEN);
-                    HttpGet httpGetColl = new HttpGet(builderColl.build());
-                    httpResponse = httpClient.execute(httpGetColl);
+                    httpResponse = HTTP_CLIENT.execute(new HttpGet(getUriBuilder(URI_COLLABORATORS).build()));
                 } catch (URISyntaxException e1) {
                     printInfoAboutUriSyntaxException(e1);
                 } catch (IOException e2) {
                     printInfoAboutIoSyntaxException(e2);
                 }
                 return httpResponse;
-            }
-            case PUT: {
-                CloseableHttpResponse httpResponse = null;
+            case PUT:
                 try {
-                    URIBuilder builderUser = new URIBuilder(url);
-                    builderUser.setParameter("access_token", TOKEN);
-                    HttpPut httpPutUser = new HttpPut(builderUser.build());
-                    System.out.println("\n Request: \n" + httpPutUser.getRequestLine());
-                    httpResponse = httpClient.execute(httpPutUser);
+                    httpResponse = HTTP_CLIENT.execute(new HttpPut(getUriBuilder(URI_SEND_INVITATION).build()));
                 } catch (URISyntaxException e1) {
                     printInfoAboutUriSyntaxException(e1);
                 } catch (IOException e2) {
                     printInfoAboutIoSyntaxException(e2);
                 }
                 return httpResponse;
-            }
-            default: {
-                return null;
-            }
+            default:
+                throw new IllegalArgumentException("Method type is not supported");
         }
+    }
+
+    private static URIBuilder getUriBuilder(String url) throws URISyntaxException {
+        URIBuilder builderColl = new URIBuilder(url);
+        builderColl.setParameter("access_token", TOKEN);
+        return builderColl;
     }
 }

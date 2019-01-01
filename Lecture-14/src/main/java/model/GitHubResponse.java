@@ -2,8 +2,8 @@ package model;
 
 public class GitHubResponse {
 
-    private String body;
-    private int statusCode;
+    private final String body;
+    private final int statusCode;
 
     public GitHubResponse(String body, int statusCode) {
         this.body = body;
